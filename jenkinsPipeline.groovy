@@ -23,6 +23,13 @@ stages {
            cmakeBuild buildDir: 'build', cmakeArgs: '-DLINK_STATIC=0FF', generator: 'Ninja', installation: 'cmake'
         }
     }
+    stage('Build')
+    {
+        steps{
+           sh 'cd build; ninja clean; ninja' 
+        }
+    }
+
 
 
 
