@@ -1,11 +1,22 @@
 # Build for Markturn
 version: 2.1
 
+commands:
+  greeting:
+    parameters:
+      to:
+        default: "world"
+        type: string
+    steps:
+      - run: echo "Hello <<parameters.to>>"
+
 jobs:
   build:
     docker:
       - image: srg97/markturn_ubuntu
     steps:
+      - greeting:
+          to: "Stephan"
       - checkout
       - run: apt update
       - run: mkdir build
