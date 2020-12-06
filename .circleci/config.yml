@@ -1,22 +1,17 @@
 # Build for Markturn
 version: 2.1
 
-commands:
-  greeting:
-    parameters:
-      to:
-        default: "world"
-        type: string
-    steps:
-      - run: echo "Hello <<parameters.to>>"
-
 jobs:
   build:
     docker:
       - image: srg97/markturn_ubuntu
     steps:
-      - greeting:
-          to: "Stephan"
+      - run:
+          name: "Greeting"
+          command: echo Hello $CIRCLE_USERNAME
+      - run:
+          name: "I am on branch"
+          command: echo $CIRCLE_BRANCH
       - checkout
       - run: apt update
       - run: mkdir build
@@ -26,5 +21,3 @@ jobs:
       - run: cd build && cpack -G DEB
       - store_artifacts:
           path: build/markturn-0.0.0-Linux.deb
-      - store_test_results:
-          path: test-results
