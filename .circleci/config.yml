@@ -13,3 +13,5 @@ jobs:
       - run: cd build && ninja && ninja install && ldconfig
       - run: cd build && ctest
       - run: cd build && cpack -G DEB
+      - store_artifacts:
+          path: build/markturn-0.0.0-Linux.deb
