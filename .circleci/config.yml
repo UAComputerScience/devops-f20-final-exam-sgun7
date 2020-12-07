@@ -20,6 +20,6 @@ jobs:
       - run: cd build && ctest -T Test && pwd
       - run: cd build && cpack -G DEB
       - store_test_results:
-          path: Testing/1234123432/test.xml
+          path: /root/project/build
       - store_artifacts:
           path: build/markturn-0.0.0-Linux.deb
