@@ -6,11 +6,8 @@ jobs:
     docker:
       - image: srg97/markturn_ubuntu
     steps:
-     - restore_cache:
-        keys:
-            - source-v1-{{ .Branch }}-{{ .Revision }}
-            - source-v1-{{ .Branch }}-
-            - source-v1-
+      - restore_cache: 
+          key: source-v1-{{ .Branch }}-{{ .Revision }}
       - run:
           name: "Greeting"
           command: echo Hello $CIRCLE_USERNAME
@@ -28,8 +25,9 @@ jobs:
           path: /root/project/build
       - store_artifacts:
           path: build/markturn-0.0.0-Linux.deb
+      - save_cache:
+          key: source-v1-{{ .Branch }}-{{ .Revision }}
+          paths:
+            - ".git"
 
-  - save_cache:
-      key: source-v1-{{ .Branch }}-{{ .Revision }}
-      paths:
-          - ".git"
+
