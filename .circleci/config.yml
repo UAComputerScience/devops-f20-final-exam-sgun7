@@ -6,6 +6,11 @@ jobs:
     docker:
       - image: srg97/markturn_ubuntu
     steps:
+     - restore_cache:
+        keys:
+            - source-v1-{{ .Branch }}-{{ .Revision }}
+            - source-v1-{{ .Branch }}-
+            - source-v1-
       - run:
           name: "Greeting"
           command: echo Hello $CIRCLE_USERNAME
@@ -13,19 +18,18 @@ jobs:
           name: "I am on branch"
           command: echo $CIRCLE_BRANCH
       - checkout
-      - persist_to_workspace:
-        root: .
-        paths:
-          - CMakeLists.txt
-          - Report.md
-          - jenkinsPipeline.groovy
       - run: apt update
       - run: mkdir build
       - run: cd build && cmake -DLINK_STATIC=0FF -DCMAKE_BUILD_TYPE=Release .. -G Ninja
       - run: cd build && ninja && ninja install && ldconfig
-      - run: cd build && ctest -T Test && pwd
+      - run: cd build && ctest -T Test
       - run: cd build && cpack -G DEB
       - store_test_results:
           path: /root/project/build
       - store_artifacts:
           path: build/markturn-0.0.0-Linux.deb
+
+  - save_cache:
+      key: source-v1-{{ .Branch }}-{{ .Revision }}
+      paths:
+          - ".git"
