@@ -22,18 +22,13 @@ pipeline {
             sh 'cd /Build; ninja'
             sh 'cd /Build; ctest'
             sh 'cd /Build; cpack -G DEB'
-           // sh 'echo "artifact file" > Build/markturn-0.0.0-Linux.deb'
-
-            //sh 'cp /Build/*.deb dist/.'
-           // sh 'pwd; ls -lh'
-           //archiveArtifacts artifacts: 'dist/*.deb', followSymlinks: false
-           archiveArtifacts artifacts: 'build/*.deb', onlyIfSuccessful: true
         }
         }
     }
- /*       post {
+    post {
         always {
             archiveArtifacts artifacts: 'build/*.deb', onlyIfSuccessful: true
         }
-    } */
+    } 
+
 }
