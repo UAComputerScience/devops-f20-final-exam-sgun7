@@ -1,5 +1,4 @@
 pipeline {
-
         agent any
 
     stages{
@@ -11,9 +10,7 @@ pipeline {
             }
         }
         
-
         steps {
-            sh 'pwd'
             sh 'cat /etc/os-release'
             sh 'curl -L https://github.com/UAComputerScience/devops-f20-final-exam-sgun7/archive/v1.0.0.tar.gz | tar xz'
             sh 'mv devops-f20-final-exam-sgun7-1.0.0 /Source'
@@ -25,6 +22,7 @@ pipeline {
         }
         }
     }
+
     post {
         always {
             archiveArtifacts artifacts: 'build/*.deb', onlyIfSuccessful: true
